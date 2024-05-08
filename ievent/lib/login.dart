@@ -1,32 +1,41 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
-class Login extends StatelessWidget {
+class Login extends StatefulWidget {
   const Login({super.key});
 
-  Widget build(BuildContext context) {
-    const header = 'Вход';
-    const login = 'Логин';
-    const password = 'Пароль';
+  @override
+  State<Login> createState() => _LoginState();
+}
 
+class _LoginState extends State<Login> {
+  static const header = 'Вход';
+  static const login = 'Логин';
+  static const password = 'Пароль';
+  static const pass = 'Войти';
+  static const account = 'Ещё нет аккаунта';
+
+  @override
+  Widget build(BuildContext context) {
     return MaterialApp(
       title: header,
+      theme: ThemeData(
+        scaffoldBackgroundColor: const Color(0xff0C8746),
+      ),
       home: Scaffold(
-        backgroundColor: const Color(0xff0C8746),
         body: SafeArea(
           child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             Column(
               children: [
-                const Padding(padding: EdgeInsets.only(top: 179)),
+                const SizedBox(height: 179),
                 const Text(header,
                     style: TextStyle(
                         fontSize: 26,
                         fontFamily: 'Dela Gothic One',
                         fontWeight: FontWeight.w400,
                         color: Colors.white)),
-                const Padding(padding: EdgeInsets.only(top: 40)),
+                const SizedBox(height: 40),
                 ClipPath(
-                  clipper: MyCustomClipper(),
+                  clipper: MyCustomClipperOne(),
                   child: Container(
                     width: 284,
                     height: 321,
@@ -36,36 +45,96 @@ class Login extends StatelessWidget {
                       children: [
                         Column(
                           children: [
-                            Padding(padding: EdgeInsets.only(top: 52)),
-                            Text(
-                              login,
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w400,
-                                  fontFamily: "Jost"),
-                            ),
-                            Padding(padding: EdgeInsets.only(top: 16)),
+                            SizedBox(height: 52),
+                            SizedBox(
+                                width: 185.5,
+                                height: 23,
+                                child: Text(login,
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w400,
+                                        fontFamily: "Jost"),
+                                    textAlign: TextAlign.left)),
+                            SizedBox(height: 21),
+                            SizedBox(
+                                width: 185.5,
+                                height: 32.5,
+                                child: TextField(
+                                  decoration: InputDecoration(
+                                      fillColor: Color(0xffF0F09B),
+                                      border: OutlineInputBorder(),
+                                      filled: true,
+                                      hintText: login,
+                                      hintStyle: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w400,
+                                          fontFamily: "Lora",
+                                          fontSize: 15),
+                                      contentPadding:
+                                          EdgeInsets.fromLTRB(10, 5, 0, 5)),
+                                )),
+                            SizedBox(height: 16),
+                            SizedBox(
+                                width: 185.5,
+                                height: 23,
+                                child: Text(password,
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w400,
+                                        fontFamily: "Jost"),
+                                    textAlign: TextAlign.left)),
+                            SizedBox(height: 21),
+                            SizedBox(
+                                width: 185.5,
+                                height: 32.5,
+                                child: TextField(
+                                  obscureText: true,
+                                  decoration: InputDecoration(
+                                      fillColor: Color(0xffF0F09B),
+                                      border: OutlineInputBorder(),
+                                      filled: true,
+                                      hintText: password,
+                                      hintStyle: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w400,
+                                          fontFamily: "Lora",
+                                          fontSize: 15),
+                                      contentPadding:
+                                          EdgeInsets.fromLTRB(10, 5, 0, 5)),
+                                ))
                           ],
                         )
                       ],
                     ),
                   ),
-                )
+                ),
+                ElevatedButton(onPressed: () {}, child: const Text(pass))
               ],
             )
           ]),
         ),
+        floatingActionButton: Container(
+            width: 160,
+            height: 26,
+            color: const Color(0xff0C8746),
+            child: FloatingActionButton(
+                onPressed: () {},
+                child: const Text(
+                  account,
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w700,
+                      fontFamily: 'Jost',
+                      fontSize: 18),
+                ))),
       ),
     );
   }
-
-/*  @override
-  // ignore: library_private_types_in_public_api
-  _LoginState createState() => _LoginState(); */
 }
 
-class MyCustomClipper extends CustomClipper<Path> {
+class MyCustomClipperOne extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     Path path = Path()
@@ -82,10 +151,3 @@ class MyCustomClipper extends CustomClipper<Path> {
   @override
   bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }
-
-/*class _LoginState extends State<Login> {
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}*/

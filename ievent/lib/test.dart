@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MaterialApp(
-      home: Scaffold(
-          body: const TextField(
-              style: TextStyle(fontSize: 22, color: Colors.blue),
-              maxLines: 10,
-              minLines: 5),
-          appBar: AppBar(title: Text("METANIT.COM")))));
+void main() => runApp(const HomeScreen());
+
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return Container(
+      height: size.height,
+      width: size.width,
+      decoration: const BoxDecoration(
+          image: DecorationImage(
+              fit: BoxFit.cover, image: AssetImage("assets/images/we.jpg"))),
+    );
+  }
 }
