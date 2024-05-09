@@ -15,7 +15,7 @@ class IEvent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: '/',
+      initialRoute: '/registraion_password',
       routes: {
         '/': (context) => const Login(),
         '/registration': (context) => const MainRegistration(),

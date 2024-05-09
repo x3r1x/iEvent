@@ -20,7 +20,6 @@ class _RegistrationPasswordState extends State<RegistrationPassword> {
   final TextEditingController _confirmationController = TextEditingController();
 
   String? _passwordError;
-  String? _confirmationError;
 
   bool _isPasswordError = false;
   bool _isConfirmationError = false;
@@ -29,7 +28,56 @@ class _RegistrationPasswordState extends State<RegistrationPassword> {
     String password = _passwordController.text;
     String confirmation = _confirmationController.text;
 
-    //Navigator.pushNamed(context, '/user_type');
+    if (password == confirmation) {
+      setState(() {
+        _isConfirmationError = true;
+        _isPasswordError = true;
+        _passwordError = 'Пароли не совпадают';
+      });
+    } else {
+      setState(() {
+        _isConfirmationError = false;
+        _isPasswordError = false;
+        _passwordError = null;
+      });
+    }
+
+    if (password.length < 5) {
+      setState(() {
+        _isPasswordError = true;
+        _passwordError = 'Пароль должен быть длиннее 5 символов';
+      });
+    } else {
+      if (double.tryParse(password) != null) {
+        setState(() {
+          _isPasswordError = true;
+          _passwordError = 'Пароль должен содержать латинскую букву';
+        });
+      } else {
+        if (password == password.toUpperCase()) {
+          setState(() {
+            _isPasswordError = true;
+            _passwordError = 'Пароль должен содержать маленькие буквы';
+          });
+        } else {
+          if (password == password.toLowerCase()) {
+            setState(() {
+              _isPasswordError = true;
+              _passwordError = 'Пароль должен содержать заглавные буквы';
+            });
+          } else {
+            setState(() {
+              _isPasswordError = false;
+              _passwordError = null;
+            });
+          }
+        }
+      }
+    }
+
+    if (!_isPasswordError && !_isConfirmationError) {
+      Navigator.pushNamed(context, '/user_type');
+    }
   }
 
   @override
@@ -66,17 +114,36 @@ class _RegistrationPasswordState extends State<RegistrationPassword> {
                                   Column(
                                     children: [
                                       const SizedBox(height: 22),
-                                      const SizedBox(
+                                      SizedBox(
                                           width: 197,
-                                          height: 23,
-                                          child: Text(password,
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.w400,
-                                                  fontFamily: "Jost"),
-                                              textAlign: TextAlign.left)),
-                                      const SizedBox(height: 20),
+                                          height: 30,
+                                          child: Row(
+                                            children: [
+                                              const Text(password,
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 20,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontFamily: "Jost"),
+                                                  textAlign: TextAlign.left),
+                                              const SizedBox(width: 5),
+                                              if (_isPasswordError)
+                                                SizedBox(
+                                                    width: 120,
+                                                    child: Text(_passwordError!,
+                                                        softWrap: true,
+                                                        style: const TextStyle(
+                                                            height: 0.8,
+                                                            fontSize: 12,
+                                                            color: Colors.red,
+                                                            fontWeight:
+                                                                FontWeight.w200,
+                                                            fontFamily:
+                                                                'Lora')))
+                                            ],
+                                          )),
+                                      const SizedBox(height: 10),
                                       SizedBox(
                                           width: 197,
                                           height: 34,
@@ -88,19 +155,28 @@ class _RegistrationPasswordState extends State<RegistrationPassword> {
                                                         RegExp(r'[a-zA-Z0-9]')),
                                               ],
                                               obscureText: true,
-                                              decoration: const InputDecoration(
-                                                  fillColor: Color(0xffF0F09B),
-                                                  border: OutlineInputBorder(),
+                                              decoration: InputDecoration(
+                                                  fillColor:
+                                                      const Color(0xffF0F09B),
+                                                  border:
+                                                      const OutlineInputBorder(),
+                                                  enabledBorder: OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                          color:
+                                                              _isPasswordError
+                                                                  ? Colors.red
+                                                                  : Colors
+                                                                      .black)),
                                                   filled: true,
                                                   hintText: password,
-                                                  hintStyle: TextStyle(
+                                                  hintStyle: const TextStyle(
                                                       color: Colors.black,
                                                       fontWeight:
                                                           FontWeight.w400,
                                                       fontFamily: "Lora",
                                                       fontSize: 15),
                                                   contentPadding:
-                                                      EdgeInsets.fromLTRB(
+                                                      const EdgeInsets.fromLTRB(
                                                           10, 5, 0, 5)),
                                               style: const TextStyle(
                                                   fontFamily: 'Jost',
@@ -141,19 +217,28 @@ class _RegistrationPasswordState extends State<RegistrationPassword> {
                                                         RegExp(r'[a-zA-Z0-9]')),
                                               ],
                                               obscureText: true,
-                                              decoration: const InputDecoration(
-                                                  fillColor: Color(0xffF0F09B),
-                                                  border: OutlineInputBorder(),
+                                              decoration: InputDecoration(
+                                                  fillColor:
+                                                      const Color(0xffF0F09B),
+                                                  border:
+                                                      const OutlineInputBorder(),
+                                                  enabledBorder: OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                          color:
+                                                              _isConfirmationError
+                                                                  ? Colors.red
+                                                                  : Colors
+                                                                      .black)),
                                                   filled: true,
                                                   hintText: confirm,
-                                                  hintStyle: TextStyle(
+                                                  hintStyle: const TextStyle(
                                                       color: Colors.black,
                                                       fontWeight:
                                                           FontWeight.w400,
                                                       fontFamily: "Lora",
                                                       fontSize: 15),
                                                   contentPadding:
-                                                      EdgeInsets.fromLTRB(
+                                                      const EdgeInsets.fromLTRB(
                                                           10, 5, 0, 5)),
                                               style: const TextStyle(
                                                   fontFamily: 'Jost',

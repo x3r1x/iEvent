@@ -64,9 +64,9 @@ class _MainRegistrationState extends State<MainRegistration> {
       });
     }
 
-    if (login.isEmpty) {
+    if (login.length < 3) {
       setState(() {
-        _loginError = 'Не должен быть пустым';
+        _loginError = 'Должен быть длиннее 2 символов';
         _isLoginError = true;
       });
     } else {
@@ -316,7 +316,7 @@ class _MainRegistrationState extends State<MainRegistration> {
                                               const SizedBox(width: 5),
                                               if (_isLoginError)
                                                 SizedBox(
-                                                  width: 120,
+                                                  width: 125,
                                                   child: Text(_loginError!,
                                                       softWrap: true,
                                                       style: const TextStyle(
