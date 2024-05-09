@@ -2,21 +2,20 @@ import 'dart:core';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:http/http.dart' as http;
 
-class Login extends StatefulWidget {
-  const Login({super.key});
+class MainRegistration extends StatefulWidget {
+  const MainRegistration({super.key});
 
   @override
-  State<Login> createState() => _LoginState();
+  State<MainRegistration> createState() => _MainRegistrationState();
 }
 
-class _LoginState extends State<Login> {
-  static const header = 'Вход';
+class _MainRegistrationState extends State<MainRegistration> {
+  static const header = 'Регистрация';
   static const login = 'Логин';
   static const password = 'Пароль';
   static const pass = 'Войти';
-  static const account = 'Ещё нет аккаунта';
+  static const account = 'Уже есть аккаунт';
 
   @override
   Widget build(BuildContext context) {
@@ -181,10 +180,11 @@ class _LoginState extends State<Login> {
         ));
   }
 
-  void goToRegistration() =>
-      Navigator.pushReplacementNamed(context, '/registration');
+  void goToRegistration() => Navigator.pushReplacementNamed(context, '/');
 
-  void buttonClick() {}
+  void buttonClick() {
+    //LoginRepository().doesUserExist();
+  }
 }
 
 class WhitelistingTextInputFormatter {
