@@ -1,5 +1,4 @@
 import 'dart:core';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -16,6 +15,22 @@ class _RegistrationPasswordState extends State<RegistrationPassword> {
   static const confirm = 'Подтверждение пароля';
   static const text = 'Введите пароль ещё раз';
   static const pass = 'Продолжить';
+
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmationController = TextEditingController();
+
+  String? _passwordError;
+  String? _confirmationError;
+
+  bool _isPasswordError = false;
+  bool _isConfirmationError = false;
+
+  void buttonClick() {
+    String password = _passwordController.text;
+    String confirmation = _confirmationController.text;
+
+    //Navigator.pushNamed(context, '/user_type');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,25 +81,32 @@ class _RegistrationPasswordState extends State<RegistrationPassword> {
                                           width: 197,
                                           height: 34,
                                           child: TextField(
-                                            inputFormatters: [
-                                              FilteringTextInputFormatter.allow(
-                                                  RegExp(r'[a-zA-Z0-9]')),
-                                            ],
-                                            obscureText: true,
-                                            decoration: const InputDecoration(
-                                                fillColor: Color(0xffF0F09B),
-                                                border: OutlineInputBorder(),
-                                                filled: true,
-                                                hintText: password,
-                                                hintStyle: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.w400,
-                                                    fontFamily: "Lora",
-                                                    fontSize: 15),
-                                                contentPadding:
-                                                    EdgeInsets.fromLTRB(
-                                                        10, 5, 0, 5)),
-                                          )),
+                                              controller: _passwordController,
+                                              inputFormatters: [
+                                                FilteringTextInputFormatter
+                                                    .allow(
+                                                        RegExp(r'[a-zA-Z0-9]')),
+                                              ],
+                                              obscureText: true,
+                                              decoration: const InputDecoration(
+                                                  fillColor: Color(0xffF0F09B),
+                                                  border: OutlineInputBorder(),
+                                                  filled: true,
+                                                  hintText: password,
+                                                  hintStyle: TextStyle(
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontFamily: "Lora",
+                                                      fontSize: 15),
+                                                  contentPadding:
+                                                      EdgeInsets.fromLTRB(
+                                                          10, 5, 0, 5)),
+                                              style: const TextStyle(
+                                                  fontFamily: 'Jost',
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: Colors.black))),
                                       const SizedBox(height: 16),
                                       const SizedBox(
                                           width: 197,
@@ -111,25 +133,33 @@ class _RegistrationPasswordState extends State<RegistrationPassword> {
                                           width: 197,
                                           height: 34,
                                           child: TextField(
-                                            inputFormatters: [
-                                              FilteringTextInputFormatter.allow(
-                                                  RegExp(r'[a-zA-Z0-9]')),
-                                            ],
-                                            obscureText: true,
-                                            decoration: const InputDecoration(
-                                                fillColor: Color(0xffF0F09B),
-                                                border: OutlineInputBorder(),
-                                                filled: true,
-                                                hintText: confirm,
-                                                hintStyle: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.w400,
-                                                    fontFamily: "Lora",
-                                                    fontSize: 15),
-                                                contentPadding:
-                                                    EdgeInsets.fromLTRB(
-                                                        10, 5, 0, 5)),
-                                          ))
+                                              controller:
+                                                  _confirmationController,
+                                              inputFormatters: [
+                                                FilteringTextInputFormatter
+                                                    .allow(
+                                                        RegExp(r'[a-zA-Z0-9]')),
+                                              ],
+                                              obscureText: true,
+                                              decoration: const InputDecoration(
+                                                  fillColor: Color(0xffF0F09B),
+                                                  border: OutlineInputBorder(),
+                                                  filled: true,
+                                                  hintText: confirm,
+                                                  hintStyle: TextStyle(
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontFamily: "Lora",
+                                                      fontSize: 15),
+                                                  contentPadding:
+                                                      EdgeInsets.fromLTRB(
+                                                          10, 5, 0, 5)),
+                                              style: const TextStyle(
+                                                  fontFamily: 'Jost',
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: Colors.black)))
                                     ],
                                   )
                                 ],
@@ -175,10 +205,6 @@ class _RegistrationPasswordState extends State<RegistrationPassword> {
             ]),
           ),
         ));
-  }
-
-  void buttonClick() {
-    Navigator.pushNamed(context, '/user_type');
   }
 }
 

@@ -17,6 +17,13 @@ class _LoginState extends State<Login> {
   static const pass = 'Войти';
   static const account = 'Ещё нет аккаунта';
 
+  void goToRegistration() =>
+      Navigator.pushReplacementNamed(context, '/registration');
+
+  void buttonClick() {
+    //LoginRepository().doesUserExist();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -66,24 +73,33 @@ class _LoginState extends State<Login> {
                                           width: 185.5,
                                           height: 32.5,
                                           child: TextField(
-                                            inputFormatters: [
-                                              FilteringTextInputFormatter.allow(
-                                                  RegExp(r'[a-zA-Z0-9]')),
-                                            ],
-                                            decoration: const InputDecoration(
-                                                fillColor: Color(0xffF0F09B),
-                                                border: OutlineInputBorder(),
-                                                filled: true,
-                                                hintText: login,
-                                                hintStyle: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.w400,
-                                                    fontFamily: "Lora",
-                                                    fontSize: 15),
-                                                contentPadding:
-                                                    EdgeInsets.fromLTRB(
-                                                        10, 5, 0, 5)),
-                                          )),
+                                              inputFormatters: [
+                                                FilteringTextInputFormatter
+                                                    .allow(
+                                                        RegExp(r'[a-zA-Z0-9]')),
+                                              ],
+                                              decoration: InputDecoration(
+                                                  fillColor:
+                                                      const Color(0xffF0F09B),
+                                                  border:
+                                                      const OutlineInputBorder(),
+                                                  filled: true,
+                                                  hintText: login,
+                                                  hintStyle: TextStyle(
+                                                      color: Colors.black
+                                                          .withOpacity(0.5),
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontFamily: "Lora",
+                                                      fontSize: 15),
+                                                  contentPadding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          10, 5, 0, 5)),
+                                              style: const TextStyle(
+                                                  fontFamily: 'Jost',
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: Colors.black))),
                                       const SizedBox(height: 16),
                                       const SizedBox(
                                           width: 185.5,
@@ -100,25 +116,34 @@ class _LoginState extends State<Login> {
                                           width: 185.5,
                                           height: 32.5,
                                           child: TextField(
-                                            inputFormatters: [
-                                              FilteringTextInputFormatter.allow(
-                                                  RegExp(r'[a-zA-Z0-9]')),
-                                            ],
-                                            obscureText: true,
-                                            decoration: const InputDecoration(
-                                                fillColor: Color(0xffF0F09B),
-                                                border: OutlineInputBorder(),
-                                                filled: true,
-                                                hintText: password,
-                                                hintStyle: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.w400,
-                                                    fontFamily: "Lora",
-                                                    fontSize: 15),
-                                                contentPadding:
-                                                    EdgeInsets.fromLTRB(
-                                                        10, 5, 0, 5)),
-                                          ))
+                                              inputFormatters: [
+                                                FilteringTextInputFormatter
+                                                    .allow(
+                                                        RegExp(r'[a-zA-Z0-9]')),
+                                              ],
+                                              obscureText: true,
+                                              decoration: InputDecoration(
+                                                  fillColor:
+                                                      const Color(0xffF0F09B),
+                                                  border:
+                                                      const OutlineInputBorder(),
+                                                  filled: true,
+                                                  hintText: password,
+                                                  hintStyle: TextStyle(
+                                                      color: Colors.black
+                                                          .withOpacity(0.5),
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontFamily: "Lora",
+                                                      fontSize: 15),
+                                                  contentPadding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          10, 5, 0, 5)),
+                                              style: const TextStyle(
+                                                  fontFamily: 'Jost',
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: Colors.black)))
                                     ],
                                   )
                                 ],
@@ -178,13 +203,6 @@ class _LoginState extends State<Login> {
             ),
           ),
         ));
-  }
-
-  void goToRegistration() =>
-      Navigator.pushReplacementNamed(context, '/registration');
-
-  void buttonClick() {
-    //LoginRepository().doesUserExist();
   }
 }
 

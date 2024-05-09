@@ -19,6 +19,75 @@ class _MainRegistrationState extends State<MainRegistration> {
   static const pass = 'Продолжить';
   static const account = 'Уже есть аккаунт';
 
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _surnameController = TextEditingController();
+  final TextEditingController _patronymicController = TextEditingController();
+  final TextEditingController _loginController = TextEditingController();
+
+  String? _nameError;
+  String? _surnameError;
+  String? _loginError;
+
+  bool _isNameError = false;
+  bool _isSurnameError = false;
+  bool _isLoginError = false;
+
+  void goToLogin() => Navigator.pushReplacementNamed(context, '/');
+
+  void buttonClick() {
+    String name = _nameController.text;
+    String surname = _surnameController.text;
+    String patronymic = _patronymicController.text;
+    String login = _loginController.text;
+
+    if (name.isEmpty) {
+      setState(() {
+        _nameError = 'Не должно быть пустым';
+        _isNameError = true;
+      });
+    } else {
+      setState(() {
+        _nameError = null;
+        _isNameError = false;
+      });
+    }
+
+    if (surname.isEmpty) {
+      setState(() {
+        _surnameError = 'Не должна быть пустой';
+        _isSurnameError = true;
+      });
+    } else {
+      setState(() {
+        _surnameError = '';
+        _isSurnameError = false;
+      });
+    }
+
+    if (login.isEmpty) {
+      setState(() {
+        _loginError = 'Не должен быть пустым';
+        _isLoginError = true;
+      });
+    } else {
+      if (RegExp(r'^[0-9]').hasMatch(login)) {
+        setState(() {
+          _loginError = 'Не может начинаться с цифры';
+          _isLoginError = true;
+        });
+      } else {
+        setState(() {
+          _loginError = '';
+          _isLoginError = false;
+        });
+      }
+    }
+
+    if (!_isLoginError && !_isNameError && !_isLoginError) {
+      Navigator.pushNamed(context, '/registraion_password');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -53,73 +122,141 @@ class _MainRegistrationState extends State<MainRegistration> {
                                   Column(
                                     children: [
                                       const SizedBox(height: 11),
-                                      const SizedBox(
+                                      SizedBox(
                                           width: 185.5,
                                           height: 23,
-                                          child: Text(name,
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.w400,
-                                                  fontFamily: "Jost"),
-                                              textAlign: TextAlign.left)),
+                                          child: Row(
+                                            children: [
+                                              const Text(name,
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 20,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontFamily: "Jost"),
+                                                  textAlign: TextAlign.left),
+                                              const SizedBox(width: 5),
+                                              if (_isNameError)
+                                                SizedBox(
+                                                  width: 120,
+                                                  child: Text(_nameError!,
+                                                      softWrap: true,
+                                                      style: const TextStyle(
+                                                          height: 0.6,
+                                                          fontSize: 12,
+                                                          color: Colors.red,
+                                                          fontWeight:
+                                                              FontWeight.w200,
+                                                          fontFamily: 'Lora')),
+                                                )
+                                            ],
+                                          )),
                                       const SizedBox(height: 7),
                                       SizedBox(
                                           width: 185.5,
                                           height: 32.5,
                                           child: TextField(
-                                            inputFormatters: [
-                                              FilteringTextInputFormatter.allow(
-                                                  RegExp(r'[а-яА-Я]')),
-                                            ],
-                                            decoration: const InputDecoration(
-                                                fillColor: Color(0xffF0F09B),
-                                                border: OutlineInputBorder(),
-                                                filled: true,
-                                                hintText: name,
-                                                hintStyle: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.w400,
-                                                    fontFamily: "Lora",
-                                                    fontSize: 15),
-                                                contentPadding:
-                                                    EdgeInsets.fromLTRB(
-                                                        10, 5, 0, 5)),
-                                          )),
+                                              controller: _nameController,
+                                              inputFormatters: [
+                                                FilteringTextInputFormatter
+                                                    .allow(RegExp(r'[а-яА-Я]')),
+                                              ],
+                                              decoration: InputDecoration(
+                                                  fillColor:
+                                                      const Color(0xffF0F09B),
+                                                  border:
+                                                      const OutlineInputBorder(),
+                                                  enabledBorder:
+                                                      OutlineInputBorder(
+                                                          borderSide: BorderSide(
+                                                              color: _isNameError
+                                                                  ? Colors.red
+                                                                  : Colors
+                                                                      .black)),
+                                                  filled: true,
+                                                  hintText: name,
+                                                  hintStyle: TextStyle(
+                                                      color: Colors.black
+                                                          .withOpacity(0.5),
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontFamily: "Lora",
+                                                      fontSize: 15),
+                                                  contentPadding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          10, 5, 0, 5)),
+                                              style: const TextStyle(
+                                                  fontFamily: 'Jost',
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: Colors.black))),
                                       const SizedBox(height: 7.5),
-                                      const SizedBox(
+                                      SizedBox(
                                           width: 185.5,
                                           height: 23,
-                                          child: Text(surname,
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.w400,
-                                                  fontFamily: "Jost"),
-                                              textAlign: TextAlign.left)),
+                                          child: Row(
+                                            children: [
+                                              const Text(surname,
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 20,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontFamily: "Jost"),
+                                                  textAlign: TextAlign.left),
+                                              const SizedBox(width: 5),
+                                              if (_isSurnameError)
+                                                SizedBox(
+                                                  width: 80,
+                                                  child: Text(_surnameError!,
+                                                      softWrap: true,
+                                                      style: const TextStyle(
+                                                          height: 0.6,
+                                                          fontSize: 12,
+                                                          color: Colors.red,
+                                                          fontWeight:
+                                                              FontWeight.w200,
+                                                          fontFamily: 'Lora')),
+                                                )
+                                            ],
+                                          )),
                                       const SizedBox(height: 7),
                                       SizedBox(
                                           width: 185.5,
                                           height: 32.5,
                                           child: TextField(
-                                            inputFormatters: [
-                                              FilteringTextInputFormatter.allow(
-                                                  RegExp(r'[а-яА-Я]')),
-                                            ],
-                                            decoration: const InputDecoration(
-                                                fillColor: Color(0xffF0F09B),
-                                                border: OutlineInputBorder(),
-                                                filled: true,
-                                                hintText: surname,
-                                                hintStyle: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.w400,
-                                                    fontFamily: "Lora",
-                                                    fontSize: 15),
-                                                contentPadding:
-                                                    EdgeInsets.fromLTRB(
-                                                        10, 5, 0, 5)),
-                                          )),
+                                              controller: _surnameController,
+                                              inputFormatters: [
+                                                FilteringTextInputFormatter
+                                                    .allow(RegExp(r'[а-яА-Я]')),
+                                              ],
+                                              decoration: InputDecoration(
+                                                  fillColor:
+                                                      const Color(0xffF0F09B),
+                                                  border:
+                                                      const OutlineInputBorder(),
+                                                  enabledBorder: OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                          color: _isSurnameError
+                                                              ? Colors.red
+                                                              : Colors.black)),
+                                                  filled: true,
+                                                  hintText: surname,
+                                                  hintStyle: TextStyle(
+                                                      color: Colors.black
+                                                          .withOpacity(0.5),
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontFamily: "Lora",
+                                                      fontSize: 15),
+                                                  contentPadding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          10, 5, 0, 5)),
+                                              style: const TextStyle(
+                                                  fontFamily: 'Jost',
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: Colors.black))),
                                       const SizedBox(height: 11.5),
                                       const SizedBox(
                                           width: 185.5,
@@ -135,60 +272,103 @@ class _MainRegistrationState extends State<MainRegistration> {
                                           width: 185.5,
                                           height: 32.5,
                                           child: TextField(
+                                              controller: _patronymicController,
                                               inputFormatters: [
                                                 FilteringTextInputFormatter
                                                     .allow(RegExp(r'[а-яА-Я]')),
                                               ],
-                                              decoration: const InputDecoration(
-                                                  fillColor: Color(0xffF0F09B),
-                                                  border: OutlineInputBorder(),
+                                              decoration: InputDecoration(
+                                                  fillColor:
+                                                      const Color(0xffF0F09B),
+                                                  border:
+                                                      const OutlineInputBorder(),
                                                   filled: true,
                                                   hintText: patronymic,
                                                   hintStyle: TextStyle(
-                                                      color: Colors.black,
+                                                      color: Colors.black
+                                                          .withOpacity(0.5),
                                                       fontWeight:
                                                           FontWeight.w400,
                                                       fontFamily: "Lora",
                                                       fontSize: 15),
                                                   contentPadding:
-                                                      EdgeInsets.fromLTRB(
-                                                          10, 5, 0, 5)))),
+                                                      const EdgeInsets.fromLTRB(
+                                                          10, 5, 0, 5)),
+                                              style: const TextStyle(
+                                                  fontFamily: 'Jost',
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: Colors.black))),
                                       const SizedBox(height: 5),
-                                      const SizedBox(
+                                      SizedBox(
                                           height: 23,
                                           width: 185.5,
-                                          child: Text(
-                                            login,
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.w400,
-                                                fontFamily: 'Jost'),
+                                          child: Row(
+                                            children: [
+                                              const Text(
+                                                login,
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 20,
+                                                    fontWeight: FontWeight.w400,
+                                                    fontFamily: 'Jost'),
+                                              ),
+                                              const SizedBox(width: 5),
+                                              if (_isLoginError)
+                                                SizedBox(
+                                                  width: 120,
+                                                  child: Text(_loginError!,
+                                                      softWrap: true,
+                                                      style: const TextStyle(
+                                                          height: 0.6,
+                                                          fontSize: 12,
+                                                          color: Colors.red,
+                                                          fontWeight:
+                                                              FontWeight.w200,
+                                                          fontFamily: 'Lora')),
+                                                )
+                                            ],
                                           )),
                                       const SizedBox(height: 7),
                                       SizedBox(
                                           width: 185.5,
                                           height: 32.5,
                                           child: TextField(
+                                              controller: _loginController,
                                               inputFormatters: [
                                                 FilteringTextInputFormatter
                                                     .allow(
                                                         RegExp(r'[a-zA-Z0-9]')),
                                               ],
-                                              decoration: const InputDecoration(
-                                                  fillColor: Color(0xffF0F09B),
-                                                  border: OutlineInputBorder(),
-                                                  filled: true,
-                                                  hintText: patronymic,
-                                                  hintStyle: TextStyle(
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      fontFamily: "Lora",
-                                                      fontSize: 15),
-                                                  contentPadding:
-                                                      EdgeInsets.fromLTRB(
-                                                          10, 5, 0, 5))))
+                                              decoration: InputDecoration(
+                                                fillColor:
+                                                    const Color(0xffF0F09B),
+                                                border:
+                                                    const OutlineInputBorder(),
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                            color: _isLoginError
+                                                                ? Colors.red
+                                                                : Colors
+                                                                    .black)),
+                                                filled: true,
+                                                hintText: login,
+                                                hintStyle: TextStyle(
+                                                    color: Colors.black
+                                                        .withOpacity(0.5),
+                                                    fontWeight: FontWeight.w400,
+                                                    fontFamily: "Lora",
+                                                    fontSize: 15),
+                                                contentPadding:
+                                                    const EdgeInsets.fromLTRB(
+                                                        10, 5, 0, 5),
+                                              ),
+                                              style: const TextStyle(
+                                                  fontFamily: 'Jost',
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: Colors.black)))
                                     ],
                                   )
                                 ],
@@ -248,12 +428,6 @@ class _MainRegistrationState extends State<MainRegistration> {
             ),
           ),
         ));
-  }
-
-  void goToLogin() => Navigator.pushReplacementNamed(context, '/');
-
-  void buttonClick() {
-    Navigator.pushNamed(context, '/registraion_password');
   }
 }
 
