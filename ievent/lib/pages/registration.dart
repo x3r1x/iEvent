@@ -3,6 +3,11 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+late String userName;
+late String userSurname;
+late String userPatronymic;
+late String userLogin;
+
 class MainRegistration extends StatefulWidget {
   const MainRegistration({super.key});
 
@@ -84,6 +89,10 @@ class _MainRegistrationState extends State<MainRegistration> {
     }
 
     if (!_isLoginError && !_isNameError && !_isLoginError) {
+      userName = name;
+      userSurname = surname;
+      userPatronymic = patronymic;
+      userLogin = login;
       Navigator.pushNamed(context, '/registraion_password');
     }
   }

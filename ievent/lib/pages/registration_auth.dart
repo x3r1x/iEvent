@@ -10,6 +10,6 @@ class RegistrationAuth extends StatefulWidget {
 class _RegistrationAuthState extends State<RegistrationAuth> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp();
+    return const MaterialApp();
   }
 }

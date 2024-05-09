@@ -1,6 +1,9 @@
 import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:ievent/repositores/register_repository.dart';
+
+late String userPassword;
 
 class RegistrationPassword extends StatefulWidget {
   const RegistrationPassword({super.key});
@@ -28,20 +31,6 @@ class _RegistrationPasswordState extends State<RegistrationPassword> {
     String password = _passwordController.text;
     String confirmation = _confirmationController.text;
 
-    if (password == confirmation) {
-      setState(() {
-        _isConfirmationError = true;
-        _isPasswordError = true;
-        _passwordError = 'Пароли не совпадают';
-      });
-    } else {
-      setState(() {
-        _isConfirmationError = false;
-        _isPasswordError = false;
-        _passwordError = null;
-      });
-    }
-
     if (password.length < 5) {
       setState(() {
         _isPasswordError = true;
@@ -66,16 +55,27 @@ class _RegistrationPasswordState extends State<RegistrationPassword> {
               _passwordError = 'Пароль должен содержать заглавные буквы';
             });
           } else {
-            setState(() {
-              _isPasswordError = false;
-              _passwordError = null;
-            });
+            if (password != confirmation) {
+              setState(() {
+                _isConfirmationError = true;
+                _isPasswordError = true;
+                _passwordError = 'Пароли не совпадают';
+              });
+            } else {
+              setState(() {
+                _isConfirmationError = false;
+                _isPasswordError = false;
+                _passwordError = null;
+              });
+            }
           }
         }
       }
     }
 
     if (!_isPasswordError && !_isConfirmationError) {
+      userPassword = password;
+      RegisterRepository().registerUser();
       Navigator.pushNamed(context, '/user_type');
     }
   }
