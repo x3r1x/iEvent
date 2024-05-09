@@ -12,9 +12,11 @@ class MainRegistration extends StatefulWidget {
 
 class _MainRegistrationState extends State<MainRegistration> {
   static const header = 'Регистрация';
+  static const name = 'Имя';
+  static const surname = 'Фамилия';
+  static const patronymic = 'Отчество';
   static const login = 'Логин';
-  static const password = 'Пароль';
-  static const pass = 'Войти';
+  static const pass = 'Продолжить';
   static const account = 'Уже есть аккаунт';
 
   @override
@@ -36,7 +38,7 @@ class _MainRegistrationState extends State<MainRegistration> {
                           fontFamily: 'Dela Gothic One',
                           fontWeight: FontWeight.w400,
                           color: Colors.white)),
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 44),
                   Stack(
                     children: [
                       ClipPath(
@@ -50,31 +52,31 @@ class _MainRegistrationState extends State<MainRegistration> {
                                 children: [
                                   Column(
                                     children: [
-                                      const SizedBox(height: 52),
+                                      const SizedBox(height: 11),
                                       const SizedBox(
                                           width: 185.5,
                                           height: 23,
-                                          child: Text(login,
+                                          child: Text(name,
                                               style: TextStyle(
                                                   color: Colors.black,
                                                   fontSize: 20,
                                                   fontWeight: FontWeight.w400,
                                                   fontFamily: "Jost"),
                                               textAlign: TextAlign.left)),
-                                      const SizedBox(height: 21),
+                                      const SizedBox(height: 7),
                                       SizedBox(
                                           width: 185.5,
                                           height: 32.5,
                                           child: TextField(
                                             inputFormatters: [
                                               FilteringTextInputFormatter.allow(
-                                                  RegExp(r'[a-zA-Z0-9]')),
+                                                  RegExp(r'[а-яА-Я]')),
                                             ],
                                             decoration: const InputDecoration(
                                                 fillColor: Color(0xffF0F09B),
                                                 border: OutlineInputBorder(),
                                                 filled: true,
-                                                hintText: login,
+                                                hintText: name,
                                                 hintStyle: TextStyle(
                                                     color: Colors.black,
                                                     fontWeight: FontWeight.w400,
@@ -84,32 +86,31 @@ class _MainRegistrationState extends State<MainRegistration> {
                                                     EdgeInsets.fromLTRB(
                                                         10, 5, 0, 5)),
                                           )),
-                                      const SizedBox(height: 16),
+                                      const SizedBox(height: 7.5),
                                       const SizedBox(
                                           width: 185.5,
                                           height: 23,
-                                          child: Text(password,
+                                          child: Text(surname,
                                               style: TextStyle(
                                                   color: Colors.black,
                                                   fontSize: 20,
                                                   fontWeight: FontWeight.w400,
                                                   fontFamily: "Jost"),
                                               textAlign: TextAlign.left)),
-                                      const SizedBox(height: 21),
+                                      const SizedBox(height: 7),
                                       SizedBox(
                                           width: 185.5,
                                           height: 32.5,
                                           child: TextField(
                                             inputFormatters: [
                                               FilteringTextInputFormatter.allow(
-                                                  RegExp(r'[a-zA-Z0-9]')),
+                                                  RegExp(r'[а-яА-Я]')),
                                             ],
-                                            obscureText: true,
                                             decoration: const InputDecoration(
                                                 fillColor: Color(0xffF0F09B),
                                                 border: OutlineInputBorder(),
                                                 filled: true,
-                                                hintText: password,
+                                                hintText: surname,
                                                 hintStyle: TextStyle(
                                                     color: Colors.black,
                                                     fontWeight: FontWeight.w400,
@@ -118,7 +119,76 @@ class _MainRegistrationState extends State<MainRegistration> {
                                                 contentPadding:
                                                     EdgeInsets.fromLTRB(
                                                         10, 5, 0, 5)),
-                                          ))
+                                          )),
+                                      const SizedBox(height: 11.5),
+                                      const SizedBox(
+                                          width: 185.5,
+                                          height: 23,
+                                          child: Text(patronymic,
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.w400,
+                                                  fontFamily: 'Jost'))),
+                                      const SizedBox(height: 7),
+                                      SizedBox(
+                                          width: 185.5,
+                                          height: 32.5,
+                                          child: TextField(
+                                              inputFormatters: [
+                                                FilteringTextInputFormatter
+                                                    .allow(RegExp(r'[а-яА-Я]')),
+                                              ],
+                                              decoration: const InputDecoration(
+                                                  fillColor: Color(0xffF0F09B),
+                                                  border: OutlineInputBorder(),
+                                                  filled: true,
+                                                  hintText: patronymic,
+                                                  hintStyle: TextStyle(
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontFamily: "Lora",
+                                                      fontSize: 15),
+                                                  contentPadding:
+                                                      EdgeInsets.fromLTRB(
+                                                          10, 5, 0, 5)))),
+                                      const SizedBox(height: 5),
+                                      const SizedBox(
+                                          height: 23,
+                                          width: 185.5,
+                                          child: Text(
+                                            login,
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w400,
+                                                fontFamily: 'Jost'),
+                                          )),
+                                      const SizedBox(height: 7),
+                                      SizedBox(
+                                          width: 185.5,
+                                          height: 32.5,
+                                          child: TextField(
+                                              inputFormatters: [
+                                                FilteringTextInputFormatter
+                                                    .allow(
+                                                        RegExp(r'[a-zA-Z0-9]')),
+                                              ],
+                                              decoration: const InputDecoration(
+                                                  fillColor: Color(0xffF0F09B),
+                                                  border: OutlineInputBorder(),
+                                                  filled: true,
+                                                  hintText: patronymic,
+                                                  hintStyle: TextStyle(
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontFamily: "Lora",
+                                                      fontSize: 15),
+                                                  contentPadding:
+                                                      EdgeInsets.fromLTRB(
+                                                          10, 5, 0, 5))))
                                     ],
                                   )
                                 ],
@@ -134,10 +204,10 @@ class _MainRegistrationState extends State<MainRegistration> {
                                   width: 263,
                                   child: Container(
                                       height: 32,
-                                      width: 130,
+                                      width: 150,
                                       alignment: Alignment.topRight,
                                       child: SizedBox(
-                                          width: 130,
+                                          width: 150,
                                           height: 32,
                                           child: ElevatedButton(
                                             onPressed: buttonClick,
@@ -174,16 +244,16 @@ class _MainRegistrationState extends State<MainRegistration> {
                       fontSize: 18,
                       fontFamily: 'Jost',
                       fontWeight: FontWeight.w700),
-                  recognizer: TapGestureRecognizer()..onTap = goToRegistration),
+                  recognizer: TapGestureRecognizer()..onTap = goToLogin),
             ),
           ),
         ));
   }
 
-  void goToRegistration() => Navigator.pushReplacementNamed(context, '/');
+  void goToLogin() => Navigator.pushReplacementNamed(context, '/');
 
   void buttonClick() {
-    //LoginRepository().doesUserExist();
+    Navigator.pushNamed(context, '/registraion_password');
   }
 }
 

@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 
-class RegistrationAuth extends StatelessWidget {
+class RegistrationAuth extends StatefulWidget {
   const RegistrationAuth({super.key});
 
   @override
+  State<RegistrationAuth> createState() => _RegistrationAuthState();
+}
+
+class _RegistrationAuthState extends State<RegistrationAuth> {
+  @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(),
-        backgroundColor: Color(0xffF6F6A8),
-      ),
-      color: Color(0xffF6F6A8),
-    );
+    return RegistrationAuth();
   }
 }
