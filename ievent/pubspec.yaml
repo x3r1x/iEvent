@@ -50,6 +50,9 @@ flutter:
     - family: Lora
       fonts:
         - asset: assets/fonts/Lora-VariableFont_wght.ttf
+    - family: Abel
+      fonts:
+        - asset: assets/fonts/Abel-Regular.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

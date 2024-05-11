@@ -5,6 +5,7 @@ import 'package:ievent/pages/post.dart';
 import 'package:ievent/pages/problem.dart';
 import 'package:ievent/pages/registration.dart';
 import 'package:ievent/pages/registration_auth.dart';
+import 'package:ievent/pages/registration_class.dart';
 import 'package:ievent/pages/registration_password.dart';
 
 void main() => runApp(const IEvent());
@@ -21,9 +22,10 @@ class IEvent extends StatelessWidget {
         '/registration': (context) => const MainRegistration(),
         '/registraion_password': (context) => const RegistrationPassword(),
         '/user_type': (context) => const RegistrationAuth(),
+        '/user_classroom': (context) => const RegistrationClass(),
         '/main_page': (context) => const MainPage(),
         '/post': (context) => const Post(),
-        '/problem': (context) => const Problem()
+        '/problem': (context) => const Problem(),
       },
     );
   }

@@ -1,6 +1,7 @@
 import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:ievent/pages/registration.dart';
 import 'package:ievent/repositores/register_repository.dart';
 
 late String userPassword;
@@ -27,7 +28,9 @@ class _RegistrationPasswordState extends State<RegistrationPassword> {
   bool _isPasswordError = false;
   bool _isConfirmationError = false;
 
-  void buttonClick() {
+  String login = userLogin;
+
+  Future<void> buttonClick() async {
     String password = _passwordController.text;
     String confirmation = _confirmationController.text;
 
@@ -74,9 +77,16 @@ class _RegistrationPasswordState extends State<RegistrationPassword> {
     }
 
     if (!_isPasswordError && !_isConfirmationError) {
-      userPassword = password;
-      RegisterRepository().registerUser();
-      Navigator.pushNamed(context, '/user_type');
+      if (await RegisterRepository().canRegister(login, password)) {
+        userPassword = password;
+        Navigator.pushNamed(context, '/user_type');
+      } else {
+        setState(() {
+          _isPasswordError = true;
+          _isConfirmationError = true;
+          _passwordError = 'Логин уже существует!';
+        });
+      }
     }
   }
 

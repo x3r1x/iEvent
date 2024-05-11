@@ -1,38 +1,61 @@
 import 'dart:convert';
-import 'package:ievent/pages/registration.dart';
-import 'package:ievent/pages/registration_password.dart';
-import 'package:http/http.dart' as http;
+
+import 'package:dio/dio.dart';
 
 class RegisterRepository {
-  void registerUser() async {
-    String name = userName;
-    String surname = userSurname;
-    String patronymic = userPatronymic;
-    String login = userLogin;
-    String password = userPassword;
-    String type = "Ученик";
-    int classroom = 10;
+  var dio = Dio();
+
+  Future<bool> canRegister(String login, String password) async {
+    String url = 'http://185.247.17.150/api/User/login';
+
+    var data = {"username": login, "password": password};
+    String dataEncoded = jsonEncode(data);
+
+    try {
+      Response response = await dio.post(url, data: dataEncoded);
+
+      return !(response.statusCode == 200);
+    } catch (error) {
+      return error.toString().contains('401');
+    }
+  }
+
+  Future<bool> registerUser(String name, String surname, String patronymic,
+      String login, String password, String type, int userClass) async {
+    String url = 'http://185.247.17.150/api/User/register';
 
     var data = {
       "name": name,
       "surname": surname,
       "username": login,
       "type": type,
-      "class": classroom,
+      "class": userClass,
       "patronymic": patronymic,
       "password": password
     };
+    String dataEncoded = jsonEncode(data);
 
-    String json = jsonEncode(data);
+    try {
+      Response response = await dio.post(url, data: dataEncoded);
 
-    var url = Uri.parse('http://185.247.17.150/api/User/register');
-    var response = await http.post(url, body: json);
+      return response.statusCode == 200;
+    } catch (error) {
+      return false;
+    }
+  }
 
-    if (response.statusCode == 200) {
-      print('POST запрос выполнен успешно');
-      print('Ответ сервера: ${response.body}');
-    } else {
-      print('Ошибка при выполнении POST запроса: ${response.statusCode}');
+  Future<String> getToken(String login, String password) async {
+    String url = 'http://185.247.17.150/api/User/login';
+
+    var data = {"username": login, "password": password};
+    String dataEncoded = jsonEncode(data);
+
+    try {
+      Response response = await dio.post(url, data: dataEncoded);
+
+      return response.data['token'];
+    } catch (error) {
+      return 'err';
     }
   }
 }
