@@ -20,7 +20,7 @@ class RegisterRepository {
     }
   }
 
-  Future<bool> registerUser(String name, String surname, String patronymic,
+  Future<void> registerUser(String name, String surname, String patronymic,
       String login, String password, String type, int userClass) async {
     String url = 'http://185.247.17.150/api/User/register';
 
@@ -33,15 +33,9 @@ class RegisterRepository {
       "patronymic": patronymic,
       "password": password
     };
+
     String dataEncoded = jsonEncode(data);
-
-    try {
-      Response response = await dio.post(url, data: dataEncoded);
-
-      return response.statusCode == 200;
-    } catch (error) {
-      return false;
-    }
+    await dio.post(url, data: dataEncoded);
   }
 
   Future<String> getToken(String login, String password) async {
@@ -49,13 +43,8 @@ class RegisterRepository {
 
     var data = {"username": login, "password": password};
     String dataEncoded = jsonEncode(data);
+    Response response = await dio.post(url, data: dataEncoded);
 
-    try {
-      Response response = await dio.post(url, data: dataEncoded);
-
-      return response.data['token'];
-    } catch (error) {
-      return 'err';
-    }
+    return response.data['token'];
   }
 }

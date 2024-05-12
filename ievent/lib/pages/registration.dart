@@ -105,7 +105,8 @@ class _MainRegistrationState extends State<MainRegistration> {
           scaffoldBackgroundColor: const Color(0xff0C8746),
         ),
         home: Scaffold(
-          body: SafeArea(
+          body: SingleChildScrollView(
+              child: SafeArea(
             child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               Column(
                 children: [
@@ -421,7 +422,7 @@ class _MainRegistrationState extends State<MainRegistration> {
                 ],
               )
             ]),
-          ),
+          )),
           floatingActionButton: SizedBox(
             width: 160,
             height: 26,

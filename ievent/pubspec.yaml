@@ -28,6 +28,11 @@ flutter:
   assets:
     - assets/images/iEvent.png
     - assets/images/we.jpg
+    - assets/images/account.png
+    - assets/images/events.png
+    - assets/images/problems.png
+    - assets/images/selected_events.png
+    - assets/images/selected_problems.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -43,39 +43,37 @@ class _RegistrationAuthState extends State<RegistrationAuth> {
         _errorMessage = 'Кто вы?';
       });
     } else {
-      if (type != admin) {
+      if (type != admin && type != teacher) {
         userType = type;
         Navigator.pushNamed(context, '/user_classroom');
       } else {
-        registerAdmin();
+        registerHeadmasters();
       }
     }
   }
 
   void goToPassword() => Navigator.pop(context);
 
-  Future<void> registerAdmin() async {
-    userType = 'Администратор';
+  Future<void> registerHeadmasters() async {
+    if (type == admin) {
+      type = 'Администратор';
+    }
 
-    String name = userName;
-    String surname = userSurname;
-    String patronymic = userPatronymic;
-    String login = userLogin;
-    String password = userPassword;
+    try {
+      await RegisterRepository().registerUser(userName, userSurname,
+          userPatronymic, userLogin, userPassword, type, 0);
 
-    if (await RegisterRepository()
-        .registerUser(name, surname, patronymic, login, password, type, 0)) {
-      userToken = await RegisterRepository().getToken(login, password);
-      print(userToken);
-      if (userToken == 'err') {
+      try {
+        userToken =
+            await RegisterRepository().getToken(userLogin, userPassword);
+        Navigator.pushReplacementNamed(context, '/main_page');
+      } catch (err) {
         setState(() {
           _isError = true;
           _errorMessage = 'Ошибка регистрации';
         });
-      } else {
-        Navigator.pushReplacementNamed(context, '/main');
       }
-    } else {
+    } catch (err) {
       setState(() {
         _isError = true;
         _errorMessage = 'Ошибка регистрации';
@@ -89,8 +87,9 @@ class _RegistrationAuthState extends State<RegistrationAuth> {
       title: 'Вход',
       theme: ThemeData(scaffoldBackgroundColor: const Color(0xffF6F6A8)),
       home: Scaffold(
-          body: SafeArea(
-              child: Row(
+          body: SingleChildScrollView(
+              child: SafeArea(
+                  child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Column(
@@ -259,21 +258,26 @@ class _RegistrationAuthState extends State<RegistrationAuth> {
                 ],
               )
             ],
-          )),
+          ))),
           floatingActionButton: SizedBox(
-            width: 420,
-            height: 28,
-            child: RichText(
-              text: TextSpan(
-                  text: back,
-                  style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 22,
-                      fontFamily: 'Abel',
-                      fontWeight: FontWeight.w400),
-                  recognizer: TapGestureRecognizer()..onTap = goToPassword),
-            ),
-          )),
+              height: 28,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  const SizedBox(width: 50),
+                  RichText(
+                    text: TextSpan(
+                        text: back,
+                        style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 22,
+                            fontFamily: 'Abel',
+                            fontWeight: FontWeight.w400),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = goToPassword),
+                  ),
+                ],
+              ))),
     );
   }
 }
